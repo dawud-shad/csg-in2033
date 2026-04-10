@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="TOP_CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ac.csg.pu.gui.dashboard.admin.PromotionEditController"
+      stylesheets="@../dashboard.css"
+      styleClass="auth-container">
+
+    <Label text="Edit Promotion" styleClass="auth-title"/>
+
+    <Label text="Name:"/>
+    <TextField fx:id="nameField"/>
+
+    <HBox spacing="20">
+        <VBox spacing="5">
+            <Label text="Start Date (yyyy-MM-dd):"/>
+            <TextField fx:id="startDateField"/>
+        </VBox>
+        <VBox spacing="5">
+            <Label text="End Date (yyyy-MM-dd):"/>
+            <TextField fx:id="endDateField"/>
+        </VBox>
+    </HBox>
+
+    <Label text="Product Discounts:"/>
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="productIdField" promptText="Product ID" prefWidth="100"/>
+        <TextField fx:id="discountField" promptText="Discount %" prefWidth="100"/>
+        <Button text="Update" onAction="#onUpdateDiscount" styleClass="auth-button"/>
+    </HBox>
+
+    <ListView fx:id="discountListView" prefHeight="120"/>
+
+    <Label fx:id="errorLabel" styleClass="auth-error"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#onCancel" styleClass="auth-button"/>
+        <Button text="Save" onAction="#onSave" styleClass="auth-button"/>
+    </HBox>
+</VBox>

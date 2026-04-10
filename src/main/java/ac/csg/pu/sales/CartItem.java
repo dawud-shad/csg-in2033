@@ -1,0 +1,48 @@
+package ac.csg.pu.sales;
+
+import ac.csg.pu.prm.Promotion;
+
+public class CartItem {
+    private final Product product;
+    private final Promotion promotion; // can be null
+    private int quantity;
+
+    public CartItem(Product product, Promotion promotion) {
+        this.product = product;
+        this.promotion = promotion;
+        this.quantity = 1;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Promotion getPromotion() {
+        return promotion;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void incrementQuantity() {
+        quantity++;
+    }
+
+    public void decrementQuantity() {
+        if (quantity > 0) quantity--;
+    }
+
+    public double getUnitPrice() {
+        double price = product.getPrice();
+        if (promotion != null) {
+            double discount = promotion.getDiscountForProduct(product.getId());
+            price = price * (1 - discount / 100.0);
+        }
+        return price;
+    }
+
+    public double getTotalPrice() {
+        return getUnitPrice() * quantity;
+    }
+}

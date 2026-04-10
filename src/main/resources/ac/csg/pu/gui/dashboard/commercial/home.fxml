@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Rectangle?>
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="ac.csg.pu.gui.dashboard.commercial.HomeController"
+           stylesheets="@../dashboard.css"
+           styleClass="root"
+           fx:id="root">
+
+    <VBox spacing="15" alignment="TOP_CENTER" prefWidth="800">
+        <Label text="Browse Products" styleClass="heading"/>
+        <HBox alignment="TOP_RIGHT" prefWidth="800">
+            <Button text="Cart" onAction="#toggleCart"/>
+        </HBox>
+        <TextField fx:id="searchField"
+                   promptText="Search products or promotions..."
+                   prefWidth="400"/>
+        <Label fx:id="errorLabel" styleClass="error"/>
+
+        <Accordion fx:id="promotionAccordion" prefWidth="700" styleClass="panel"/>
+
+        <ScrollPane fitToWidth="true" prefHeight="400" prefWidth="750" styleClass="panel">
+            <TilePane fx:id="productTilePane"
+                      hgap="15" vgap="15"
+                      prefColumns="4">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+            </TilePane>
+        </ScrollPane>
+    </VBox>
+
+    <!-- Dim overlay -->
+    <Rectangle fx:id="cartOverlay"
+               fill="rgba(0,0,0,0.4)"
+               StackPane.alignment="CENTER"
+               visible="false"/>
+
+    <fx:include source="cart-sidebar.fxml"
+                fx:id="cartSidebar"
+                StackPane.alignment="CENTER_RIGHT"/>
+
+</StackPane>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ac.csg.pu.gui.dashboard.commercial.CartController"
+            stylesheets="@../dashboard.css"
+            prefWidth="300"
+            styleClass="panel cart-background">
+
+    <VBox spacing="10"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.rightAnchor="0"
+          styleClass="spacing-medium">
+
+        <Label text="Your Cart" styleClass="heading" HBox.hgrow="ALWAYS"/>
+
+        <ListView fx:id="cartListView" VBox.vgrow="ALWAYS"/>
+
+        <HBox spacing="10">
+            <Button text="Checkout" fx:id="checkoutButton"/>
+            <Button text="Close" fx:id="closeButton"/>
+        </HBox>
+    </VBox>
+
+</AnchorPane>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ac.csg.pu.gui.dashboard.commercial.CheckoutController"
+            stylesheets="@../dashboard.css">
+
+    <VBox spacing="15" alignment="CENTER" prefWidth="400" AnchorPane.topAnchor="50"
+          AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200"
+          styleClass="panel">
+
+        <!-- Title -->
+        <Label text="Checkout" styleClass="heading"/>
+
+        <!-- Summary of cart items -->
+        <VBox fx:id="summaryBox" spacing="5" style="-fx-border-color: #dcdfe3; -fx-padding: 10;">
+            <!-- Items will be added dynamically -->
+        </VBox>
+
+        <!-- Total -->
+        <Label fx:id="totalLabel" text="Total: £0.00" styleClass="heading"/>
+
+        <!-- Payment info -->
+        <TextField fx:id="nameField" promptText="Cardholder Name"/>
+        <TextField fx:id="cardNumberField" promptText="Card Number"/>
+        <TextField fx:id="expiryField" promptText="Expiry (MM/YY)"/>
+        <TextField fx:id="cvvField" promptText="CVV"/>
+        <TextField fx:id="addressField" promptText="Delivery Address"/>
+
+        <!-- Action buttons -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Pay Now" fx:id="payButton"/>
+            <Button text="Cancel" fx:id="cancelButton"/>
+        </HBox>
+
+        <!-- Error / success message -->
+        <Label fx:id="messageLabel" styleClass="error"/>
+    </VBox>
+</AnchorPane>

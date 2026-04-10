@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ac.csg.pu.gui.auth.LoginController"
+      stylesheets="@auth.css"
+      styleClass="auth-container"
+      prefWidth="400" prefHeight="350">
+
+    <Label text="Login" styleClass="auth-title"/>
+    <TextField fx:id="emailField" promptText="Email" styleClass="auth-input"/>
+    <PasswordField fx:id="passwordField" promptText="Password" styleClass="auth-input"/>
+    <Button fx:id="loginButton" text="Login" onAction="#onLogin" styleClass="auth-button"/>
+    <Hyperlink text="Don't have an account?" onAction="#switchToRegister" styleClass="auth-link"/>
+    <Label fx:id="errorLabel" styleClass="auth-error"/>
+</VBox>

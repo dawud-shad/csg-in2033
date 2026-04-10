@@ -1,0 +1,55 @@
+/* Root container style */
+.auth-container {
+    -fx-background-color: #f4f6f8;
+    -fx-padding: 40;
+    -fx-spacing: 15;
+    -fx-alignment: center;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 2);
+    -fx-max-width: 400px; /* stops it stretching across window */
+    -fx-pref-width: 400px;
+}
+
+/* Title label */
+.auth-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Text fields and password fields */
+.auth-input {
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-background-color: #ffffff;
+}
+
+/* Buttons */
+.auth-button {
+    -fx-background-color: #4a90e2;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-padding: 8 20;
+    -fx-cursor: hand;
+}
+.auth-button:hover {
+    -fx-background-color: #357ab8;
+}
+
+/* Hyperlinks */
+.auth-link {
+    -fx-text-fill: #4a90e2;
+    -fx-cursor: hand;
+}
+
+/* Error label */
+.auth-error {
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}

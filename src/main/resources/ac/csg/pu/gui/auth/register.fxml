@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="ac.csg.pu.gui.auth.RegisterController"
+      stylesheets="@auth.css"
+      styleClass="auth-container"
+      prefWidth="400" prefHeight="450">
+
+    <Label text="Register" styleClass="auth-title"/>
+    <TextField fx:id="emailField" promptText="Email" styleClass="auth-input"/>
+
+    <HBox spacing="10">
+        <RadioButton fx:id="nonCommercialRadio" text="Non-Commercial" toggleGroup="$accountTypeGroup" selected="true"/>
+        <RadioButton fx:id="commercialRadio" text="Commercial" toggleGroup="$accountTypeGroup"/>
+    </HBox>
+
+    <!-- Commercial fields -->
+    <VBox fx:id="commercialFields" spacing="10" visible="false" managed="false">
+        <TextField fx:id="companyNameField" promptText="Company Name" styleClass="auth-input"/>
+        <TextField fx:id="companyAddressField" promptText="Company Address" styleClass="auth-input"/>
+        <TextField fx:id="companyRegIdField" promptText="Company Registration ID" styleClass="auth-input"/>
+    </VBox>
+
+    <Button fx:id="registerButton" text="Register" onAction="#onRegister" styleClass="auth-button"/>
+    <Hyperlink text="Already have an account?" onAction="#switchToLogin" styleClass="auth-link"/>
+    <Label fx:id="errorLabel" styleClass="auth-error"/>
+</VBox>
