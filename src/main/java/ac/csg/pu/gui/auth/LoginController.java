@@ -2,6 +2,7 @@ package ac.csg.pu.gui.auth;
 
 import ac.csg.pu.gui.AppView;
 import ac.csg.pu.gui.SceneHelper;
+import ac.csg.pu.gui.util.SessionManager;
 import ac.csg.pu.gui.util.ShakeAnimation;
 import ac.csg.pu.members.UserDatabase;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +48,7 @@ public class LoginController {
             errorLabel.setText("Login successful!");
 
             String userType = UserDatabase.getUserType(email);
+            SessionManager.login(email, userType);
 
             switch (userType) {
                 case "A" -> switchToAdminDashboard();
@@ -54,6 +57,7 @@ public class LoginController {
                 default -> {
                     errorLabel.setText("Unknown user type: " + userType);
                     SceneHelper.switchScene("auth/login.fxml");
+                    SessionManager.logout();
                 }
             }
 

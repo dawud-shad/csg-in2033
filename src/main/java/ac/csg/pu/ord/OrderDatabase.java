@@ -16,6 +16,7 @@ public class OrderDatabase {
     public static void createTables() {
         String orderTable = "CREATE TABLE IF NOT EXISTS orders ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "customer_email TEXT NOT NULL"
                 + "status TEXT NOT NULL,"
                 + "date TEXT,"
                 + "address TEXT"
@@ -25,7 +26,7 @@ public class OrderDatabase {
         String itemTable = "CREATE TABLE IF NOT EXISTS order_items ("
                 + "item_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "order_id INTEGER NOT NULL,"
-                + "product_id INTEGER NOT NULL"
+                + "product_id INTEGER NOT NULL,"
                 + "product_name TEXT NOT NULL,"
                 + "purchase_price REAL NOT NULL,"
                 + "quantity INTEGER NOT NULL,"
@@ -37,9 +38,9 @@ public class OrderDatabase {
     }
 
     // ---- Order Management ----
-    public static int insertOrder(String status, String date, String address) {
-        String sql = "INSERT INTO orders(status, date, address) VALUES(?, ?, ?)";
-        return db.executeInsert(sql, status, date, address);
+    public static int insertOrder(String customerEmail, String status, String date, String address) {
+        String sql = "INSERT INTO orders(customer_email, status, date, address) VALUES(?, ?, ?)";
+        return db.executeInsert(sql, customerEmail, status, date, address);
     }
 
     public static void deleteOrder(int orderId) {
@@ -58,7 +59,12 @@ public class OrderDatabase {
         Map<Integer, OrderItem> itemMap = new HashMap<>();
 
         db.queryMultiple(sql, rs -> {
-            itemMap.put(rs.getInt("item_id"), new OrderItem(rs.getInt("product_id"), rs.getString("product_name"), rs.getDouble("purchase_price"), rs.getInt("quantity")));
+            itemMap.put(rs.getInt("item_id"), new OrderItem(
+                    rs.getInt("product_id"),
+                    rs.getString("product_name"),
+                    rs.getDouble("purchase_price"),
+                    rs.getInt("quantity")
+            ));
             return null;
         }, orderId);
 

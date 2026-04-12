@@ -8,6 +8,7 @@ import static ac.csg.pu.ord.OrderDatabase.*;
 public class Order {
 
     private int id;
+    private String email;
     private OrderStatus status;
     private LocalDate date;
     private String address;
@@ -16,7 +17,8 @@ public class Order {
     private Map<Integer, OrderItem> items = new HashMap<>();;
 
     // ---- Constructor ----
-    Order(int id, OrderStatus status, LocalDate date, String address) {
+    Order(int id, String email, OrderStatus status, LocalDate date, String address) {
+        this.email = email;
         this.id = id;
         this.status = status;
         this.date = date;
@@ -25,6 +27,7 @@ public class Order {
 
     // ---- Getters ----
     public int getId() { return id; }
+    public String getEmail() { return email; }
     public Collection<OrderItem> getItems() { return items.values(); }
     public OrderStatus getStatus() { return status; }
     public LocalDate getDate() { return date; }

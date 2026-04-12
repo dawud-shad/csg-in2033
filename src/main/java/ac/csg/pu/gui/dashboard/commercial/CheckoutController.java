@@ -1,13 +1,18 @@
 package ac.csg.pu.gui.dashboard.commercial;
 
 import ac.csg.pu.gui.SceneHelper;
+import ac.csg.pu.gui.util.SessionManager;
 import ac.csg.pu.gui.util.ShakeAnimation;
+import ac.csg.pu.ord.OrderDatabase;
+import ac.csg.pu.ord.OrderStatus;
 import ac.csg.pu.sales.Cart;
 import ac.csg.pu.sales.CartItem;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.time.LocalDate;
 
 public class CheckoutController {
 
@@ -97,7 +102,44 @@ public class CheckoutController {
     }
 
     private void makePayment() {
+        saveTransaction();
+    }
 
+    private void saveTransaction() {
+        String address = addressField.getText().trim();
+        String customerEmail = SessionManager.getCurrentUserEmail();
+
+        // Insert order into DB
+        int orderId = OrderDatabase.insertOrder(
+                customerEmail,
+                OrderStatus.ACCEPTED.name(),
+                LocalDate.now().toString(),
+                address
+        );
+
+        if (orderId == -1) {
+            messageLabel.setText("Failed to save order.");
+            setInputsDisabled(false);
+            return;
+        }
+
+        // Insert each cart item as an order item
+        for (CartItem item : Cart.getItems().values()) {
+            OrderDatabase.insertItem(
+                    orderId,
+                    item.getProduct().getId(),
+                    item.getProduct().getName(),
+                    item.getTotalPrice() / item.getQuantity(), // price per unit
+                    item.getQuantity()
+            );
+        }
+
+        // Clear the cart
+        Cart.clear();
+
+        // Update UI
+        messageLabel.setText("Payment successful! Order #" + orderId + " placed.");
+        refreshSummary();
     }
 
     private void shakeFields() {
