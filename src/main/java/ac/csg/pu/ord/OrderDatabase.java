@@ -5,7 +5,9 @@ import ac.csg.pu.ord.OrderItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OrderDatabase {
@@ -15,23 +17,23 @@ public class OrderDatabase {
     // ---- Table Creation ----
     public static void createTables() {
         String orderTable = "CREATE TABLE IF NOT EXISTS orders ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "customer_email TEXT NOT NULL,"
-                + "status TEXT NOT NULL,"
-                + "date TEXT,"
-                + "address TEXT"
-                + ");";
+            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "customer_email TEXT NOT NULL,"
+            + "status TEXT NOT NULL,"
+            + "date TEXT,"
+            + "address TEXT"
+            + ");";
         db.executeUpdate(orderTable);
 
         String itemTable = "CREATE TABLE IF NOT EXISTS order_items ("
-                + "item_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "order_id INTEGER NOT NULL,"
-                + "product_id INTEGER NOT NULL,"
-                + "product_name TEXT NOT NULL,"
-                + "purchase_price REAL NOT NULL,"
-                + "quantity INTEGER NOT NULL,"
-                + "FOREIGN KEY(order_id) REFERENCES orders(id)"
-                + ");";
+            + "item_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "order_id INTEGER NOT NULL,"
+            + "product_id INTEGER NOT NULL,"
+            + "product_name TEXT NOT NULL,"
+            + "purchase_price REAL NOT NULL,"
+            + "quantity INTEGER NOT NULL,"
+            + "FOREIGN KEY(order_id) REFERENCES orders(id)"
+            + ");";
         db.executeUpdate(itemTable);
 
         logger.info("Order tables created");
@@ -41,6 +43,37 @@ public class OrderDatabase {
     public static int insertOrder(String customerEmail, String status, String date, String address) {
         String sql = "INSERT INTO orders(customer_email, status, date, address) VALUES(?,?,?,?)";
         return db.executeInsert(sql, customerEmail, status, date, address);
+    }
+
+    public static List<Order> getOrders(String email) {
+        String sql = "SELECT * FROM orders WHERE customer_email=? ORDER BY date DESC";
+
+        List<Order> orders = db.queryMultiple(
+            sql, rs -> new Order(
+                rs.getInt("id"),
+                rs.getString("customer_email"),
+                OrderStatus.valueOf(rs.getString("status")),
+                LocalDate.parse(rs.getString("date")),
+                rs.getString("address")
+            ), email
+        );
+
+        sql = "SELECT product_id, product_name, purchase_price, quantity FROM order_items WHERE order_id=?";
+
+        for (Order order : orders) {
+            List<OrderItem> items = db.queryMultiple(
+                sql, rs -> new OrderItem(
+                    rs.getInt("product_id"),
+                    rs.getString("product_name"),
+                    rs.getDouble("purchase_price"),
+                    rs.getInt("quantity")
+                ), order.getId()
+            );
+
+            items.forEach(order::addItem);
+        }
+
+        return orders;
     }
 
     public static void deleteOrder(int orderId) {

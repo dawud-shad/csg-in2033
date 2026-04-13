@@ -18,8 +18,8 @@ public class Order {
 
     // ---- Constructor ----
     Order(int id, String email, OrderStatus status, LocalDate date, String address) {
-        this.email = email;
         this.id = id;
+        this.email = email;
         this.status = status;
         this.date = date;
         this.address = address;

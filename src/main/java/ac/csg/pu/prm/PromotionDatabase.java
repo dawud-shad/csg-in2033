@@ -18,21 +18,21 @@ public class PromotionDatabase {
     // ---- Table creation ----
     public static void createTables() {
         String promoTable = "CREATE TABLE IF NOT EXISTS promotions ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "name TEXT NOT NULL,"
-                + "active INTEGER DEFAULT 1,"
-                + "start_date TEXT,"
-                + "end_date TEXT"
-                + ");";
+            + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "name TEXT NOT NULL,"
+            + "active INTEGER DEFAULT 1,"
+            + "start_date TEXT,"
+            + "end_date TEXT"
+            + ");";
         db.executeUpdate(promoTable);
 
         String discountTable = "CREATE TABLE IF NOT EXISTS promotion_discounts ("
-                + "promotion_id INTEGER NOT NULL,"
-                + "product_id INTEGER NOT NULL,"
-                + "discount_percent REAL NOT NULL,"
-                + "PRIMARY KEY(promotion_id, product_id),"
-                + "FOREIGN KEY(promotion_id) REFERENCES promotions(id)"
-                + ");";
+            + "promotion_id INTEGER NOT NULL,"
+            + "product_id INTEGER NOT NULL,"
+            + "discount_percent REAL NOT NULL,"
+            + "PRIMARY KEY(promotion_id, product_id),"
+            + "FOREIGN KEY(promotion_id) REFERENCES promotions(id)"
+            + ");";
         db.executeUpdate(discountTable);
 
         logger.info("Promotion tables created");
@@ -62,15 +62,17 @@ public class PromotionDatabase {
 
     public static Map<Integer, Double> getDiscountMap(int promotionId) {
         String sql = "SELECT product_id, discount_percent " +
-                "FROM promotion_discounts " +
-                "WHERE promotion_id = ?";
+            "FROM promotion_discounts " +
+            "WHERE promotion_id = ?";
 
         Map<Integer, Double> discountMap = new HashMap<>();
 
-        db.queryMultiple(sql, rs -> {
-            discountMap.put(rs.getInt("product_id"), rs.getDouble("discount_percent"));
-            return null;
-        }, promotionId);
+        db.queryMultiple(
+            sql, rs -> {
+                discountMap.put(rs.getInt("product_id"), rs.getDouble("discount_percent"));
+                return null;
+            }, promotionId
+        );
 
         return discountMap;
     }
