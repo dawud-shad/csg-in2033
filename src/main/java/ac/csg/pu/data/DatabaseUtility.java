@@ -112,34 +112,4 @@ public class DatabaseUtility {
         }, params);
         return result != null ? result : false;
     }
-
-    // DEPRECATED METHODS, DO NOT USE
-
-    /*
-    // Query single integer
-    public static int queryInt(String sql, Object... params) {
-        try (Connection conn = Database.connect();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            for (int i = 0; i < params.length; i++) ps.setObject(i + 1, params[i]);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            logger.error("DB query failed: {}", sql, e);
-        }
-        return 0;
-    }
-
-    // Query single string
-    public static String queryString(String sql, Object... params) {
-        try (Connection conn = Database.connect();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            for (int i = 0; i < params.length; i++) ps.setObject(i + 1, params[i]);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) return rs.getString(1);
-        } catch (SQLException e) {
-            logger.error("DB query failed: {}", sql, e);
-        }
-        return null;
-    }
-     */
 }
