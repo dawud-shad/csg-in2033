@@ -1,5 +1,6 @@
 package ac.csg.pu.gui.dashboard.commercial;
 
+import ac.csg.pu.config.Constants;
 import ac.csg.pu.prm.Promotion;
 import ac.csg.pu.sales.Cart;
 import ac.csg.pu.sales.Product;
@@ -35,7 +36,14 @@ public class ProductCardController {
         String merchantName = productFeed.getMerchant(product.getMerchantId()).getName();
         merchantLabel.setText(merchantName);
 
-        originalPriceLabel.setText("£" + product.getPrice());
+        // Apply VAT for display if not exempt
+        double displayPrice = product.getPrice();
+        if (!product.isVatExempt()) {
+            displayPrice *= (1.0 + Constants.VAT_RATE);
+        }
+
+        String vatText = product.isVatExempt() ? " (VAT exempt)" : " (incl. VAT)";
+        originalPriceLabel.setText(String.format("£%.2f%s", displayPrice, vatText));
 
         // Placeholder image
         productImage.setImage(new Image(
@@ -50,15 +58,20 @@ public class ProductCardController {
         this.promotion = promotion;
 
         double price = product.getPrice();
+        // Base price including VAT if not exempt
+        if (!product.isVatExempt()) {
+            price *= (1.0 + Constants.VAT_RATE);
+        }
         double discount = promotion.getDiscountForProduct(product.getId());
         double newPrice = price * (1 - discount / 100.0);
 
-        originalPriceLabel.setText(String.format("£%.2f", price));
+        String vatText = product.isVatExempt() ? " (VAT exempt)" : " (incl. VAT)";
+        originalPriceLabel.setText(String.format("£%.2f%s", price, vatText));
 
         if (price > newPrice) {
             originalPriceLabel.getStyleClass().setAll("old-price");
             discountedPriceLabel.getStyleClass().setAll("new-price");
-            discountedPriceLabel.setText(String.format("£%.2f", newPrice));
+            discountedPriceLabel.setText(String.format("£%.2f%s", newPrice, vatText));
             discountedPriceLabel.setVisible(true);
         }
 

@@ -46,7 +46,10 @@ public class CartCardController {
         nameLabel.setText(item.getProduct().getName());
         promotionLabel.setText(item.getPromotion() != null ? "(" + item.getPromotion().getName() + ")" : "");
         quantityLabel.setText(String.valueOf(item.getQuantity()));
-        totalPriceLabel.setText(String.format("£%.2f", item.getTotalPrice()));
+
+        // Append VAT label to the cart total
+        String vatText = item.getProduct().isVatExempt() ? " (VAT exempt)" : " (incl. VAT)";
+        totalPriceLabel.setText(String.format("£%.2f%s", item.getTotalPrice(), vatText));
 
         // Hide minus button if quantity is 0
         minusButton.setVisible(item.getQuantity() > 0);
