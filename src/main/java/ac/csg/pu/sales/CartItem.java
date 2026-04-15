@@ -36,12 +36,8 @@ public class CartItem {
     }
 
     public double getUnitPrice() {
-        double price = product.getPrice();
+        double price = product.getVATPrice();
 
-        // Apply configurable VAT if the product is not medically exempt
-        if (!product.isVatExempt()) {
-            price = price * (1.0 + Constants.VAT_RATE);
-        }
 
         if (promotion != null) {
             double discount = promotion.getDiscountForProduct(product.getId());

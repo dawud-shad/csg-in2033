@@ -26,11 +26,13 @@
 
     <!-- Price + Button -->
     <HBox spacing="10" alignment="CENTER">
-        <HBox spacing="10">
-            <Label fx:id="originalPriceLabel" styleClass="normal-price" />
-            <Label fx:id="discountedPriceLabel" styleClass="new-price" visible="false" />
-        </HBox>
+        <VBox alignment="CENTER_LEFT" spacing="2">
+            <HBox spacing="5">
+                <Label fx:id="originalPriceLabel" styleClass="normal-price" />
+                <Label fx:id="discountedPriceLabel" styleClass="new-price" visible="false" />
+            </HBox>
+            <Label fx:id="vatLabel" style="-fx-text-fill: #7f8c8d; -fx-font-size: 10px;"/>
+        </VBox>
         <Button text="Add" fx:id="addButton"/>
     </HBox>
-
 </VBox>

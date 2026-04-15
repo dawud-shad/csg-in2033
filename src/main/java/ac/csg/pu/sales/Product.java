@@ -23,4 +23,11 @@ public class Product {
     public boolean isVatExempt() {
         return isVatExempt;
     }
+    public double getVATPrice() {
+        if (isVatExempt) {
+            return price;
+        } else {
+            return price * (1.0 + ac.csg.pu.config.Constants.VAT_RATE);
+        }
+    }
 }

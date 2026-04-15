@@ -19,6 +19,7 @@ public class ProductCardController {
     @FXML private Label merchantLabel;
     @FXML private Label originalPriceLabel;
     @FXML private Label discountedPriceLabel;
+    @FXML private Label vatLabel;
     @FXML private Button addButton;
 
     private Product product;
@@ -37,13 +38,9 @@ public class ProductCardController {
         merchantLabel.setText(merchantName);
 
         // Apply VAT for display if not exempt
-        double displayPrice = product.getPrice();
-        if (!product.isVatExempt()) {
-            displayPrice *= (1.0 + Constants.VAT_RATE);
-        }
-
-        String vatText = product.isVatExempt() ? " (VAT exempt)" : " (incl. VAT)";
-        originalPriceLabel.setText(String.format("£%.2f%s", displayPrice, vatText));
+        double displayPrice = product.getVATPrice();
+        originalPriceLabel.setText(String.format("£%.2f", displayPrice));
+        vatLabel.setText(product.isVatExempt() ? "(VAT exempt)" : "(incl. VAT)");
 
         // Placeholder image
         productImage.setImage(new Image(
@@ -57,21 +54,17 @@ public class ProductCardController {
         this.product = product;
         this.promotion = promotion;
 
-        double price = product.getPrice();
-        // Base price including VAT if not exempt
-        if (!product.isVatExempt()) {
-            price *= (1.0 + Constants.VAT_RATE);
-        }
+        double basePrice = product.getVATPrice();
         double discount = promotion.getDiscountForProduct(product.getId());
-        double newPrice = price * (1 - discount / 100.0);
+        double newPrice = basePrice * (1.0 - (discount / 100.0));
 
-        String vatText = product.isVatExempt() ? " (VAT exempt)" : " (incl. VAT)";
-        originalPriceLabel.setText(String.format("£%.2f%s", price, vatText));
+        vatLabel.setText(product.isVatExempt() ? "(VAT exempt)" : "(incl. VAT)");
+        originalPriceLabel.setText(String.format("£%.2f", basePrice));
 
-        if (price > newPrice) {
+        if (basePrice > newPrice) {
             originalPriceLabel.getStyleClass().setAll("old-price");
             discountedPriceLabel.getStyleClass().setAll("new-price");
-            discountedPriceLabel.setText(String.format("£%.2f%s", newPrice, vatText));
+            discountedPriceLabel.setText(String.format("£%.2f", newPrice));
             discountedPriceLabel.setVisible(true);
         }
 
