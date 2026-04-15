@@ -1,6 +1,7 @@
 package ac.csg.pu.comms;
 
 import ac.csg.pu.comms.model.Mail;
+import ac.csg.pu.comms.model.Order;
 import ac.csg.pu.comms.model.Payment;
 import ac.csg.pu.comms.model.Response;
 import ac.csg.pu.ord.OrderDatabase;
@@ -23,6 +24,9 @@ public class RestServer {
 
         stopOnShutdown();
 
+        // Health endpoint
+        app.get("/health", ctx -> ctx.result("OK"));
+
         // Payment endpoint
         app.post("/pay", ctx -> {
             Payment request = ctx.bodyAsClass(Payment.class);
@@ -35,6 +39,13 @@ public class RestServer {
             Mail request = ctx.bodyAsClass(Mail.class);
             Response response = MailService.process(request);
            ctx.json(response);
+        });
+
+        // Order endpoint
+        app.get("/order/track/{orderId}", ctx -> {
+            int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+            Response response = OrderService.process(orderId);
+            ctx.json(response);
         });
     }
 
