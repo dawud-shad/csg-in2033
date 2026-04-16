@@ -15,8 +15,9 @@
 
     <VBox spacing="20" alignment="CENTER" maxWidth="425">
         <HBox spacing="10">
-            <Button text="Add Promotion" onAction="#onAddPromotion"/>
-            <Button text="Refresh" onAction="#onRefresh"/>
+            <Button text="Add Promotion" onAction="#onAddPromotion" styleClass="auth-button"/>
+            <Button text="Refresh" onAction="#onRefresh" styleClass="auth-button"/>
+            <Button text="Reports" onAction="#onReportsClick" styleClass="auth-button"/>
         </HBox>
 
         <TableView fx:id="promotionsTable">
