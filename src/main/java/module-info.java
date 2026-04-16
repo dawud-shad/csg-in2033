@@ -4,13 +4,17 @@ module ac.csg.pu {
     requires javafx.fxml;
     // Logging
     requires org.slf4j;
+    // PDF
     requires org.apache.pdfbox;
     requires org.apache.commons.logging;
     // SQL
     requires java.sql;
+    // REST
     requires io.javalin;
     requires okhttp3;
     requires com.fasterxml.jackson.databind;
+    // Mail
+    requires jakarta.mail;
 
     opens ac.csg.pu.gui.auth to javafx.graphics, javafx.fxml;
     opens ac.csg.pu.gui.dashboard.admin to javafx.graphics, javafx.fxml;

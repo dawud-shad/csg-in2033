@@ -1,5 +1,7 @@
 package ac.csg.pu.gui.dashboard.commercial;
 
+import ac.csg.pu.comms.MailService;
+import ac.csg.pu.comms.model.Mail;
 import ac.csg.pu.config.Constants;
 import ac.csg.pu.gui.SceneHelper;
 import ac.csg.pu.gui.util.SessionManager;
@@ -168,6 +170,21 @@ public class CheckoutController {
         if (!SessionManager.User.isGuest()) {
             UserDatabase.incrementPurchase(customerEmail);
         }
+
+
+        // send email asynchronously
+        new Thread(() -> {
+            try {
+                Mail mail = new Mail();
+                mail.receivers = new String[]{customerEmail};
+                mail.subject = "Order Confirmation #" + orderId;
+                mail.body = "http://localhost:8090/mail/track/" + orderId;
+
+                MailService.process(mail);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
         Cart.clear();
         setInputsDisabled(true);
