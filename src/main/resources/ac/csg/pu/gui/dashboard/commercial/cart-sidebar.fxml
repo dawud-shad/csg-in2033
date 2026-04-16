@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="ac.csg.pu.gui.dashboard.commercial.CartController"
-            stylesheets="@../dashboard.css"
-            prefWidth="300"
-            styleClass="panel cart-background">
+            stylesheets="@../dashboard.css, @../components.css"
+            prefWidth="320"
+            styleClass="cart-sidebar">
 
-    <VBox spacing="10"
+    <VBox spacing="12"
           AnchorPane.topAnchor="0"
           AnchorPane.bottomAnchor="0"
           AnchorPane.leftAnchor="0"
-          AnchorPane.rightAnchor="0"
-          styleClass="spacing-medium">
+          AnchorPane.rightAnchor="0">
 
-        <Label text="Your Cart" styleClass="heading" HBox.hgrow="ALWAYS"/>
+        <Label text="Your Cart" styleClass="cart-title"/>
 
-        <ListView fx:id="cartListView" VBox.vgrow="ALWAYS"/>
+        <Separator/>
 
-        <HBox spacing="10">
-            <Button text="Checkout" fx:id="checkoutButton"/>
-            <Button text="Close" fx:id="closeButton"/>
+        <ListView fx:id="cartListView" VBox.vgrow="ALWAYS" styleClass="list-view"/>
+
+        <Separator/>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Checkout" fx:id="checkoutButton" styleClass="cart-action-button"/>
+            <Button text="Close"    fx:id="closeButton"    styleClass="cart-close-button"/>
         </HBox>
+
     </VBox>
 
 </AnchorPane>

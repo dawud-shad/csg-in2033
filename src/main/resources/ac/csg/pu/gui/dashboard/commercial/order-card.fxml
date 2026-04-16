@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="ac.csg.pu.gui.dashboard.commercial.OrderCardController"
+      stylesheets="@../dashboard.css, @../components.css"
       spacing="8"
       styleClass="panel">
 
-    <!-- Header -->
-    <HBox spacing="10">
-        <Label fx:id="statusLabel" styleClass="heading"/>
-        <Label fx:id="dateLabel"/>
+    <HBox spacing="12" alignment="CENTER_LEFT">
+        <Label fx:id="statusLabel" styleClass="order-status"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label fx:id="dateLabel" styleClass="order-date"/>
     </HBox>
 
-    <!-- Total -->
-    <Label fx:id="totalLabel" styleClass="new-price"/>
+    <Label fx:id="totalLabel" styleClass="discounted-price"/>
 
-    <!-- Toggle button -->
-    <Button fx:id="toggleButton" text="View Items"/>
+    <Button fx:id="toggleButton" text="View Items" styleClass="order-toggle-button"/>
 
-    <!-- Expandable section -->
-    <VBox fx:id="detailsBox" spacing="5" visible="false" managed="false">
-
-        <Label fx:id="addressLabel"/>
-
+    <VBox fx:id="detailsBox" spacing="6" visible="false" managed="false" styleClass="order-details-box">
+        <Label fx:id="addressLabel" styleClass="order-address"/>
         <VBox fx:id="itemsBox" spacing="3"/>
     </VBox>
 

@@ -1,42 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="ac.csg.pu.gui.dashboard.commercial.CheckoutController"
-            stylesheets="@../dashboard.css">
+            stylesheets="@../dashboard.css, @../components.css"
+            styleClass="page-background">
 
-    <VBox spacing="15" alignment="CENTER" prefWidth="400" AnchorPane.topAnchor="50"
-          AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="200" AnchorPane.rightAnchor="200"
+    <VBox spacing="14" alignment="CENTER"
+          prefWidth="460"
+          AnchorPane.topAnchor="40"
+          AnchorPane.bottomAnchor="40"
+          AnchorPane.leftAnchor="170"
+          AnchorPane.rightAnchor="170"
           styleClass="panel">
 
-        <!-- Title -->
         <Label text="Checkout" styleClass="heading"/>
 
-        <!-- Summary of cart items -->
-        <VBox fx:id="summaryBox" spacing="5" style="-fx-border-color: #dcdfe3; -fx-padding: 10;">
-            <!-- Items will be added dynamically -->
-        </VBox>
+        <Separator/>
 
-        <!-- Total -->
-        <Label fx:id="totalLabel" text="Total: £0.00" styleClass="heading"/>
+        <VBox fx:id="summaryBox" spacing="6" styleClass="checkout-summary"/>
 
-        <!-- Payment info -->
-        <TextField fx:id="nameField" promptText="Cardholder Name" styleClass="dash-input"/>
-        <TextField fx:id="cardNumberField" promptText="Card Number" styleClass="dash-input"/>
-        <TextField fx:id="expiryField" promptText="Expiry (MM/YY)" styleClass="dash-input"/>
-        <TextField fx:id="cvvField" promptText="CVV" styleClass="dash-input"/>
-        <TextField fx:id="addressField" promptText="Delivery Address" styleClass="dash-input"/>
-        <TextField fx:id="guestEmailField" promptText="your@email.com" styleClass="dash-input"/>
+        <Label fx:id="totalLabel" text="Total: 0.00" styleClass="checkout-total"/>
 
-        <!-- Action buttons -->
-        <HBox spacing="10" alignment="CENTER">
-            <Button text="Pay Now" fx:id="payButton"/>
-            <Button text="Exit" fx:id="exitButton"/>
+        <Separator/>
+
+        <Label text="Payment Details" styleClass="payment-label"/>
+        <TextField fx:id="nameField"       promptText="Cardholder Name"  styleClass="dash-input" maxWidth="Infinity"/>
+        <TextField fx:id="cardNumberField" promptText="Card Number"       styleClass="dash-input" maxWidth="Infinity"/>
+
+        <HBox spacing="12">
+            <TextField fx:id="expiryField" promptText="Expiry (MM/YY)"   styleClass="dash-input" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="cvvField"    promptText="CVV"               styleClass="dash-input" prefWidth="90"/>
         </HBox>
 
-        <!-- Error / success message -->
-        <Label fx:id="messageLabel" styleClass="error"/>
+        <TextField fx:id="addressField"    promptText="Delivery Address"  styleClass="dash-input" maxWidth="Infinity"/>
+        <TextField fx:id="guestEmailField" promptText="your@email.com"    styleClass="dash-input" maxWidth="Infinity"/>
+
+        <HBox spacing="12" alignment="CENTER">
+            <Button text="Pay Now" fx:id="payButton"  styleClass="pay-button"/>
+            <Button text="Cancel"  fx:id="exitButton" styleClass="cancel-button"/>
+        </HBox>
+
+        <Label fx:id="messageLabel" styleClass="error" wrapText="true" maxWidth="Infinity"/>
+
     </VBox>
+
 </AnchorPane>
