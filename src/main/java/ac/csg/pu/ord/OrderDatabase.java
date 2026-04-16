@@ -116,9 +116,9 @@ public class OrderDatabase {
         db.executeUpdate(sql, orderId);
     }
 
-    public static int insertItem(int orderId, int productId, String productName, double purchasePrice, int quantity) {
-        String sql = "INSERT INTO order_items(order_id, product_id, product_name, purchase_price, quantity) VALUES(?,?,?,?,?)";
-        return db.executeInsert(sql, orderId, productId, productName, purchasePrice, quantity);
+    public static int insertItem(int orderId, int productId, String productName, double unitPrice, double purchasePrice, int quantity) {
+        String sql = "INSERT INTO order_items(order_id, product_id, product_name, unit_price, purchase_price, quantity) VALUES(?,?,?,?,?,?)";
+        return db.executeInsert(sql, orderId, productId, productName, unitPrice, purchasePrice, quantity);
     }
 
     public static Map<Integer, OrderItem> getItemMap(int orderId) {

@@ -1,7 +1,6 @@
 package ac.csg.pu.sales;
 
 import ac.csg.pu.prm.Promotion;
-import ac.csg.pu.config.Constants;
 
 public class CartItem {
     private int id;
@@ -35,9 +34,8 @@ public class CartItem {
         if (quantity > 0) quantity--;
     }
 
-    public double getUnitPrice() {
+    public double getPurchasePrice() {
         double price = product.getVATPrice();
-
 
         if (promotion != null) {
             double discount = promotion.getDiscountForProduct(product.getId());
@@ -47,6 +45,6 @@ public class CartItem {
     }
 
     public double getTotalPrice() {
-        return getUnitPrice() * quantity;
+        return getPurchasePrice() * quantity;
     }
 }

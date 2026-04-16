@@ -151,15 +151,16 @@ public class CheckoutController {
         }
 
         for (CartItem item : Cart.getItems().values()) {
-            double unitPrice = isTenth
-                    ? item.getUnitPrice() * Constants.TENTH_ORDER_DISCOUNT
-                    : item.getUnitPrice();
+            double purchasePrice = isTenth
+                    ? item.getPurchasePrice() * Constants.TENTH_ORDER_DISCOUNT
+                    : item.getPurchasePrice();
 
             OrderDatabase.insertItem(
                     orderId,
                     item.getProduct().getId(),
                     item.getProduct().getName(),
-                    unitPrice,
+                    item.getProduct().getVATPrice(),
+                    purchasePrice,
                     item.getQuantity()
             );
         }
