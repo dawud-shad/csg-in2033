@@ -1,10 +1,8 @@
 package ac.csg.pu.comms;
 
 import ac.csg.pu.comms.model.Mail;
-import ac.csg.pu.comms.model.Order;
 import ac.csg.pu.comms.model.Payment;
 import ac.csg.pu.comms.model.Response;
-import ac.csg.pu.ord.OrderDatabase;
 import io.javalin.Javalin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +36,13 @@ public class RestServer {
         app.post("/mail", ctx -> {
             Mail request = ctx.bodyAsClass(Mail.class);
             Response response = MailService.process(request);
-           ctx.json(response);
+            ctx.json(response);
         });
 
         // Order endpoint
         app.get("/order/track/{orderId}", ctx -> {
             int orderId = Integer.parseInt(ctx.pathParam("orderId"));
-            Response response = OrderService.process(orderId);
-            ctx.json(response);
+            ctx.html(OrderService.render(orderId));
         });
     }
 

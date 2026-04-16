@@ -2,44 +2,64 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.shape.Rectangle?>
+
 <StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
            fx:controller="ac.csg.pu.gui.dashboard.commercial.HomeController"
-           stylesheets="@../dashboard.css"
+           stylesheets="@../dashboard.css, @../components.css"
            styleClass="root"
            fx:id="root">
 
-    <VBox spacing="15" alignment="TOP_CENTER" prefWidth="800">
-        <Label text="Browse Products" styleClass="heading"/>
-        <HBox alignment="TOP_RIGHT" prefWidth="800" spacing="10">
-            <Button text="Cart" onAction="#toggleCart"/>
-            <Button text="Orders" onAction="#checkOrders"/>
-            <Button text="Logout" onAction="#logout"/>
+    <VBox spacing="0" alignment="TOP_CENTER">
+
+        <HBox styleClass="nav-bar" alignment="CENTER_LEFT" spacing="16" prefHeight="60">
+            <Label text="Info" styleClass="nav-logo"/>
+            <Label text="Pharma" styleClass="nav-logo-accent"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <TextField fx:id="searchField"
+                       promptText="Search products or promotions..."
+                       styleClass="search-field"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <StackPane>
+                <Button text="Cart" onAction="#toggleCart" styleClass="nav-button-primary"/>
+                <Label fx:id="cartBadge"
+                       text="0"
+                       visible="false"
+                       styleClass="cart-badge"
+                       StackPane.alignment="TOP_RIGHT"/>
+            </StackPane>
+
+            <Button text="Orders"  onAction="#checkOrders" styleClass="nav-button"/>
+            <Button text="Logout"  onAction="#logout"      styleClass="nav-button"/>
         </HBox>
-        <TextField fx:id="searchField"
-                   promptText="Search products or promotions..."
-                   prefWidth="400"/>
-        <Label fx:id="errorLabel" styleClass="error"/>
 
-        <Accordion fx:id="promotionAccordion" prefWidth="700" styleClass="panel"/>
+        <!-- focusTraversable=false prevents JavaFX auto-scrolling to the focused node after a button click -->
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" focusTraversable="false"
+                    styleClass="body-scroll">
 
-        <ScrollPane fitToWidth="true" prefHeight="400" prefWidth="750" styleClass="panel">
-            <TilePane fx:id="productTilePane"
-                      hgap="15" vgap="15"
-                      prefColumns="4">
-                <padding>
-                    <Insets top="10" right="10" bottom="10" left="10"/>
-                </padding>
-            </TilePane>
+            <VBox spacing="18" focusTraversable="false" styleClass="body-content">
+
+                <Label fx:id="errorLabel" styleClass="error"/>
+
+                <Label text="Current Promotions" styleClass="section-heading"/>
+                <VBox fx:id="promotionsBox" spacing="16" focusTraversable="false"/>
+
+                <Label text="All Products" styleClass="section-heading"/>
+                <TilePane fx:id="productTilePane"
+                          hgap="16" vgap="16"
+                          prefColumns="4"
+                          focusTraversable="false"/>
+
+            </VBox>
         </ScrollPane>
     </VBox>
 
-    <!-- Dim overlay -->
     <Rectangle fx:id="cartOverlay"
-               fill="rgba(0,0,0,0.4)"
-               StackPane.alignment="CENTER"
+               fill="rgba(0,0,0,0.45)"
                visible="false"/>
 
     <fx:include source="cart-sidebar.fxml"

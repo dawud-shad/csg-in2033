@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Order Tracking
+    </title>
+
+    <style>
+        body { font-family: Arial; background:#f4f6f8; padding:40px; text-align:center; }
+
+        .card {
+            background:white;
+            display:inline-block;
+            padding:30px 40px;
+            border-radius:12px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.1);
+            min-width:320px;
+        }
+
+        .status {
+            font-weight:bold;
+            color:#1976d2;
+            margin-bottom:15px;
+        }
+
+        .item {
+            display:flex;
+            justify-content:space-between;
+            padding:6px 0;
+            border-bottom:1px solid #eee;
+            font-size:14px;
+        }
+
+        .total {
+            margin-top:15px;
+            font-weight:bold;
+            font-size:16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>Order #{{id}}</h2>
+
+        <div class="status">{{status}}</div>
+
+        <div style="text-align:left; margin-top:15px;">
+            {{items}}
+        </div>
+
+        <div class="total">
+            Total: £{{total}}
+        </div>
+
+        <p style="margin-top:10px; color:#777;">
+            Address: {{address}}
+        </p>
+    </div>
+</body>
+</html>

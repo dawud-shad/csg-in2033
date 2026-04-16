@@ -2,31 +2,36 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ac.csg.pu.gui.dashboard.commercial.OrdersController"
-            stylesheets="@../dashboard.css">
+            stylesheets="@../dashboard.css, @../components.css"
+            styleClass="page-background">
 
-    <VBox spacing="15"
-          alignment="CENTER"
-          prefWidth="500"
-          AnchorPane.topAnchor="50"
-          AnchorPane.bottomAnchor="50"
-          AnchorPane.leftAnchor="200"
-          AnchorPane.rightAnchor="200"
+    <VBox spacing="16"
+          AnchorPane.topAnchor="40"
+          AnchorPane.bottomAnchor="40"
+          AnchorPane.leftAnchor="180"
+          AnchorPane.rightAnchor="180"
           styleClass="panel">
 
-        <!-- Title -->
-        <Label text="Your Orders" styleClass="heading"/>
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <Button text="Back" onAction="#goBack" styleClass="back-button"/>
+            <Label text="Your Orders" styleClass="heading"/>
+        </HBox>
 
-        <!-- Orders list -->
-        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-            <VBox fx:id="ordersContainer" spacing="10"/>
+        <Separator/>
+
+        <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="scroll-pane">
+            <VBox fx:id="ordersContainer" spacing="12">
+                <padding>
+                    <Insets top="4" right="4" bottom="4" left="4"/>
+                </padding>
+            </VBox>
         </ScrollPane>
 
-        <!-- Back button -->
-        <Button text="Back" onAction="#goBack"/>
     </VBox>
 
 </AnchorPane>

@@ -1,16 +1,17 @@
 package ac.csg.pu.gui.dashboard.commercial;
 
-import ac.csg.pu.config.Constants;
 import ac.csg.pu.prm.Promotion;
 import ac.csg.pu.sales.Cart;
 import ac.csg.pu.sales.Product;
 import ac.csg.pu.sales.ProductFeed;
 import ac.csg.pu.test.TestDataInitializer;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class ProductCardController {
 
@@ -30,24 +31,12 @@ public class ProductCardController {
 
     public void setProduct(Product product) {
         this.product = product;
-
         nameLabel.setText(product.getName());
-
-        // Merchant lookup
-        String merchantName = productFeed.getMerchant(product.getMerchantId()).getName();
-        merchantLabel.setText(merchantName);
-
-        // Apply VAT for display if not exempt
-        double displayPrice = product.getVATPrice();
-        originalPriceLabel.setText(String.format("£%.2f", displayPrice));
+        merchantLabel.setText(productFeed.getMerchant(product.getMerchantId()).getName());
+        originalPriceLabel.setText(String.format("£%.2f", product.getVATPrice()));
         vatLabel.setText(product.isVatExempt() ? "(VAT exempt)" : "(incl. VAT)");
-
-        // Placeholder image
-        productImage.setImage(new Image(
-                getClass().getResource("img/placeholder.png").toExternalForm()
-        ));
-
-        setupActions();
+        productImage.setImage(new Image(getClass().getResource("img/placeholder.png").toExternalForm()));
+        setupAddButton();
     }
 
     public void setProduct(Product product, Promotion promotion) {
@@ -56,41 +45,47 @@ public class ProductCardController {
 
         double basePrice = product.getVATPrice();
         double discount = promotion.getDiscountForProduct(product.getId());
-        double newPrice = basePrice * (1.0 - (discount / 100.0));
+        double discountedPrice = basePrice * (1.0 - (discount / 100.0));
 
         vatLabel.setText(product.isVatExempt() ? "(VAT exempt)" : "(incl. VAT)");
         originalPriceLabel.setText(String.format("£%.2f", basePrice));
 
-        if (basePrice > newPrice) {
+        if (discountedPrice < basePrice) {
             originalPriceLabel.getStyleClass().setAll("old-price");
-            discountedPriceLabel.getStyleClass().setAll("new-price");
-            discountedPriceLabel.setText(String.format("£%.2f", newPrice));
+            discountedPriceLabel.setText(String.format("£%.2f", discountedPrice));
             discountedPriceLabel.setVisible(true);
         }
 
         nameLabel.setText(product.getName());
-
-        // Merchant lookup
-        String merchantName = productFeed.getMerchant(product.getMerchantId()).getName();
-        merchantLabel.setText(merchantName);
-
-        // Placeholder image
-        productImage.setImage(new Image(
-                getClass().getResource("img/placeholder.png").toExternalForm()
-        ));
-
-        setupActions();
+        merchantLabel.setText(productFeed.getMerchant(product.getMerchantId()).getName());
+        productImage.setImage(new Image(getClass().getResource("img/placeholder.png").toExternalForm()));
+        setupAddButton();
     }
 
-    private void setupActions() {
+    private void setupAddButton() {
         addButton.setOnAction(e -> {
             Cart.incrementProduct(product, promotion);
 
-            if (cartController != null) {
-                cartController.refreshCartList();
-            }
+            if (cartController != null) cartController.refreshCartList();
+
+            // Transfer focus away from the button so the ScrollPane does not auto-scroll to it
+            addButton.getParent().requestFocus();
+
+            addButton.getStyleClass().setAll("add-button-success");
+            addButton.setText("Added!");
+            addButton.setDisable(true);
+
+            PauseTransition pause = new PauseTransition(Duration.millis(900));
+            pause.setOnFinished(ev -> {
+                addButton.getStyleClass().setAll("add-button");
+                addButton.setText("Add to Cart");
+                addButton.setDisable(false);
+            });
+            pause.play();
         });
     }
 
-    public void setCartController(CartController cartController) { this.cartController = cartController; }
+    public void setCartController(CartController cartController) {
+        this.cartController = cartController;
+    }
 }
