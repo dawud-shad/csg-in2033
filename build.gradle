@@ -14,6 +14,7 @@ def jacksonVersion = "2.17.0"
 def okhttpVersion = "5.3.0"
 def pdfboxVersion = "3.0.2"
 def commonsLoggingVersion = "1.3.0"
+def jakartaMailVersion = "2.0.1"
 
 repositories {
     mavenCentral()
@@ -43,6 +44,7 @@ dependencies {
     implementation "io.javalin:javalin:$javalinVersion"
     implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
 
+    implementation "com.sun.mail:jakarta.mail:$jakartaMailVersion"
 
     // use gradle BOMs to ensure okhttp has consistent version across it's dependencies
     implementation platform("com.squareup.okhttp3:okhttp-bom:$okhttpVersion")

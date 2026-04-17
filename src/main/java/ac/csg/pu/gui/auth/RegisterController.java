@@ -1,5 +1,7 @@
 package ac.csg.pu.gui.auth;
 
+import ac.csg.pu.comms.MailService;
+import ac.csg.pu.comms.model.Mail;
 import ac.csg.pu.gui.SceneHelper;
 import ac.csg.pu.gui.util.ShakeAnimation;
 import ac.csg.pu.members.UserDatabase;
@@ -105,6 +107,8 @@ public class RegisterController {
                 UserType.NC.name()
         );
 
+        sendPasswordEmail(email, password);
+
         errorLabel.setText("Registration successful! Generated password (" + password + ") has been sent to email " + email);
     }
 
@@ -116,5 +120,25 @@ public class RegisterController {
     private void shakeFields() {
         ShakeAnimation.shake(emailField);
         ShakeAnimation.shake(commercialFields);
+    }
+
+    private void sendPasswordEmail(String email, String password) {
+        new Thread(() -> {
+            try {
+                Mail mail = new Mail();
+                mail.receivers = new String[]{email};
+                mail.subject = "Your Account Password";
+                mail.body =
+                        "Welcome!\n\n" +
+                                "Your account has been created successfully.\n\n" +
+                                "Email: " + email + "\n" +
+                                "Password: " + password + "\n\n" +
+                                "Please log in and change your password immediately.";
+
+                MailService.process(mail);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
